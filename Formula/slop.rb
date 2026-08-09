@@ -3,8 +3,8 @@ class Slop < Formula
 
   desc "Symbolic LLM-optimized programming language toolchain"
   homepage "https://github.com/slop-lang/slop"
-  url "https://github.com/slop-lang/slop/archive/refs/tags/v0.1.1.tar.gz"
-  sha256 "e23072a2d5dd9a8c4670854e7923fe42bc59bbea7dcfd9844ad83f59e450864f"
+  url "https://github.com/slop-lang/slop/archive/refs/tags/v0.1.2.tar.gz"
+  sha256 "b17d05b9d30634d9a9caf3a024b37eaa1ae3c3b1b0dfb382e88fa25fbe19311e"
   license "Apache-2.0"
 
   depends_on :macos
@@ -17,6 +17,16 @@ class Slop < Formula
   end
 
   def install
+    # v0.1.2 shipped with stale version strings in the generated bootstrap and CLI.
+    inreplace %w[
+      bootstrap/checker/slop_checker.c
+      bootstrap/compiler/slop_compiler.c
+      bootstrap/parser/slop_parser_cli.c
+      bootstrap/tester/slop_tester_main.c
+      src/slop/cli.py
+    ], "0.1.1", version.to_s
+    inreplace "src/slop/__init__.py", "0.1.0", version.to_s
+
     # Build the native toolchain from the committed C bootstrap snapshot.
     # Needs only cc + make (no Python), and the snapshot is kept in sync with
     # the SLOP source by CI, so this matches a from-source self-host.
