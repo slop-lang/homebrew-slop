@@ -3,8 +3,8 @@ class Slop < Formula
 
   desc "Symbolic LLM-optimized programming language toolchain"
   homepage "https://github.com/slop-lang/slop"
-  url "https://github.com/slop-lang/slop/archive/refs/tags/v0.5.1.tar.gz"
-  sha256 "65a19baa6e33014af50809604ca5f792cc6acc253b82deae91af082c469646ec"
+  url "https://github.com/slop-lang/slop/archive/refs/tags/v0.5.2.tar.gz"
+  sha256 "4db68225a2ff6e93c9db5293ab83d71ef8ce05a7b2e6c8749f8c6b8289fb1249"
   license "Apache-2.0"
 
   depends_on :macos
@@ -60,6 +60,10 @@ class Slop < Formula
 
       `slop mcp` serves SLOP's reference, docs, checker and formatter to a
       coding agent over MCP. For Claude Code:  claude mcp add slop -- slop mcp
+
+      `slop verify` proves contracts with the Z3 solver, which is not
+      installed by default. To add it:
+        #{opt_libexec}/bin/python -m pip install 'z3-solver>=4.12.0'
     EOS
   end
 
